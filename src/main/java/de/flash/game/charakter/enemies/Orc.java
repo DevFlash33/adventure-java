@@ -5,10 +5,10 @@ import de.flash.game.dialog.DialogManager;
 import de.flash.game.item.weapon.Axe;
 import de.flash.game.item.weapon.Weapon;
 
-public class Orc extends Enemie {
+public class Orc extends Enemy {
 
     public Orc(Status status) {
-        super("Orc", 100, 0, 0.2f, 0.5f, 0.5f , status, generateWeapon(status));
+        super("Orc", 1, 0, 0.2f, 0.5f, 0.5f , status, generateWeapon(status));
     }
 
     private static Weapon generateWeapon(Status status){

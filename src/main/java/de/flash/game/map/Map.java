@@ -1,5 +1,6 @@
 package de.flash.game.map;
 
+import de.flash.game.charakter.player.Player;
 import de.flash.game.map.field.Field;
 import de.flash.game.map.field.FieldGenerator;
 
@@ -43,7 +44,7 @@ public class Map {
         this.maxZ = maxZ;
     }
 
-    public Field getField(int x, int y, int z) {
+    public Field getField(final int x, final int y, final int z) {
         if(x < this.field.length && y < this.field[x].length && z < this.field[x][y].length) {
             if(this.field[x][y][z] == null) {
                 this.field[x][y][z] = fieldGenerator.generateRandomField();
@@ -52,6 +53,22 @@ public class Map {
         }
         return null;
     }
+
+    /**
+     *
+     * @param player obj
+     * @return Field based on Player Cords
+     */
+    public Field getField(final Player player) {
+        if(player.getX() < this.field.length && player.getY() < this.field[player.getX()].length && player.getZ() < this.field[player.getX()][player.getY()].length) {
+            if(this.field[player.getX()][player.getY()][player.getZ()] == null) {
+                this.field[player.getX()][player.getY()][player.getZ()] = fieldGenerator.generateRandomField();
+            }
+            return this.field[player.getX()][player.getY()][player.getZ()];
+        }
+        return null;
+    }
+
 
     public Field[][][] getField() {
         return field;

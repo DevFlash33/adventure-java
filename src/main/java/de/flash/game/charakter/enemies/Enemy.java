@@ -5,11 +5,11 @@ import de.flash.game.charakter.Character;
 import de.flash.game.charakter.Fightable;
 import de.flash.game.item.weapon.Weapon;
 
-public abstract class Enemie extends Character implements Fightable {
+public abstract class Enemy extends Character implements Fightable {
     private float lootChance;
     private Status status;
 
-    protected Enemie(String name, float hp, float mp, float mr, float armor, float lootChance, Status status, Weapon weapon) {
+    protected Enemy(String name, float hp, float mp, float mr, float armor, float lootChance, Status status, Weapon weapon) {
         super(name, hp, mp, mr, armor, weapon);
         this.lootChance = lootChance;
         this.status = status;
@@ -32,6 +32,13 @@ public abstract class Enemie extends Character implements Fightable {
     }
 
     public void fight(float damage, float penetration, boolean isMagic) {
-
+        if(isMagic) {
+            setHp(getHp() - (damage * (getMr() - penetration) ) );
+        } else {
+            setHp(getHp() - (damage * (getArmor() - penetration) ) );
+        }
+        if(getHp() <= 0) {
+            die();
+        }
     }
 }

@@ -1,4 +1,4 @@
-package de.flash.game.movement;
+package de.flash.game.charakter.player.movement;
 
 import de.flash.game.map.Map;
 
