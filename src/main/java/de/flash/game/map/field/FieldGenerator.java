@@ -32,7 +32,13 @@ public final class FieldGenerator {
     }
 
     private int getEnemyAmountByPlayerLevelAndStatus(final Player player, final Status status) {
-        return random.nextInt(Math.round(player.getLvl() * 2.75f * (getMultiplierByStatus(status) * 5.75f)));
+        int amount = Math.round(player.getLvl() * 2.75f * (getMultiplierByStatus(status) * 6.75f));
+        if (amount >= 1) {
+            return random.nextInt(amount);
+        } else {
+            return random.nextInt(1);
+        }
+
     }
 
     private Enemy getRandomEnemyBasedOnPlayerLevel(final Player player, final Status statusForEnemy) {
@@ -101,15 +107,15 @@ public final class FieldGenerator {
     private float getMultiplierByStatus(final Status status) {
         switch (status) {
             case NORMAL:
-                return 0.1f;
+                return random.nextFloat() * 0.15f;
             case RARE:
-                return 0.25f;
+                return random.nextFloat() * 0.5f;
             case EPIC:
-                return 0.5f;
+                return random.nextFloat() * 0.75f;
             case LEGENDARY:
-                return 1;
+                return random.nextFloat() * 1;
         }
-        return 0.1f;
+        return random.nextFloat() * 0.15f;
     }
 
     private int getMoneyByStatus(final Status status) {
