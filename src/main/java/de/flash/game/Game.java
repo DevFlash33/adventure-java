@@ -37,7 +37,7 @@ public class Game {
         if (!(player.getHp() <= 0)) {
             eventHandler.printStatus(currentField);
             final String input = inputHandler.getInput();
-            if (eventHandler.isInCombat()) {
+            if (player.isInCombat()) {
                 handleInteraction(input, combatManager, eventHandler.getLootHandler());
             } else {
                 handleInteraction(input, commandManager, eventHandler.getLootHandler());

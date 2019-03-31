@@ -5,7 +5,7 @@ public abstract class Item {
     private float weight;
     private float worth;
 
-    protected Item(String name, float weight, float worth) {
+    protected Item(final String name, final float weight, final float worth) {
         this.name = name;
         this.weight = weight;
         this.worth = worth;
@@ -15,7 +15,7 @@ public abstract class Item {
         return worth;
     }
 
-    public void setWorth(float worth) {
+    public void setWorth(final float worth) {
         this.worth = worth;
     }
 
@@ -23,7 +23,7 @@ public abstract class Item {
         return weight;
     }
 
-    public void setWeight(float weight) {
+    public void setWeight(final float weight) {
         this.weight = weight;
     }
 
@@ -31,7 +31,7 @@ public abstract class Item {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 }

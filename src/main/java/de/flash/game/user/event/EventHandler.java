@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public final class EventHandler {
-    private boolean isInCombat = false;
     private final ArrayList<Enemy> queuedFightEvent;
     private final Random random = new Random();
     private final LootHandler lootHandler = new LootHandler();
@@ -66,10 +65,8 @@ public final class EventHandler {
 
     private void checkForEnemies(final Field field, final Player player) {
         if (field.getEnemies().size() > 0) {
-            isInCombat = true;
             player.setInCombat(true);
         } else {
-            isInCombat = false;
             player.setInCombat(false);
         }
     }
@@ -95,10 +92,6 @@ public final class EventHandler {
         }
         DialogManager.printMessage("What will you do?");
 
-    }
-
-    public boolean isInCombat() {
-        return isInCombat;
     }
 
     public LootHandler getLootHandler() {

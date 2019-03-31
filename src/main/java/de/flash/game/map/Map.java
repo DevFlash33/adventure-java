@@ -5,14 +5,14 @@ import de.flash.game.map.field.Field;
 import de.flash.game.map.field.FieldGenerator;
 
 public class Map {
-    private int maxX;
-    private int maxY;
+    private final int maxX;
+    private final int maxY;
     private int maxZ;
-    private FieldGenerator fieldGenerator;
+    private final FieldGenerator fieldGenerator;
 
     private Field[][][] field;
 
-    public Map(int maxX, int maxY, int maxZ) {
+    public Map(final int maxX, final int maxY, final int maxZ) {
         this.maxX = maxX;
         this.maxY = maxY;
         this.maxZ = maxZ;
@@ -24,23 +24,15 @@ public class Map {
         return maxX;
     }
 
-    public void setMaxX(int maxX) {
-        this.maxX = maxX;
-    }
-
     public int getMaxY() {
         return maxY;
-    }
-
-    public void setMaxY(int maxY) {
-        this.maxY = maxY;
     }
 
     public int getMaxZ() {
         return maxZ;
     }
 
-    public void setMaxZ(int maxZ) {
+    public void setMaxZ(final int maxZ) {
         this.maxZ = maxZ;
     }
 
