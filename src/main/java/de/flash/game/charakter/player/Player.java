@@ -15,14 +15,19 @@ public final class Player extends Character implements Fightable {
     private int x;
     private int y;
     private int z;
-    private MovementManager movement = new MovementManager();
+    private final MovementManager movement = new MovementManager();
+    private boolean isInCombat = false;
+    private int lvl;
+    private float lvlProgress;
 
-    public Player(String name, int x, int y, int z) {
-        super(name, 100, 0, 0, 0, generateStartWeapon());
+    public Player(final String name, final int x, final int y, final int z) {
+        super(name, 100, 0, 0, 0, generateStartWeapon(), 100);
         this.x = x;
         this.y = y;
         this.z = z;
         maxHP = 100;
+        lvl = 1;
+        lvlProgress = 0;
     }
 
     private static Weapon generateStartWeapon() {
@@ -39,39 +44,39 @@ public final class Player extends Character implements Fightable {
     }
 
 
-    public void fight(float damage, float penetration, boolean isMagic) {
+    public void fight(final float damage, final float penetration, final boolean isMagic) {
         if(isMagic) {
-            setHp(getHp() - (damage * (getMr() - penetration) ) );
+            setHp(getHp() - (damage * -(getMr() - penetration)));
         } else {
-            setHp(getHp() - (damage * (getArmor() - penetration) ) );
+            setHp(getHp() - (damage * -(getArmor() - penetration)));
         }
         if(getHp() <= 0) {
             die();
         }
     }
 
-    public void moveForward(Map map) {
+    public void moveForward(final Map map) {
         if(movement.canMoveNorth(x + 1, y, z, map)) {
           this.x += 1;
         }
     }
 
 
-    public void moveBackward(Map map) {
+    public void moveBackward(final Map map) {
         if(movement.canMoveSouth(x - 1, y, z, map)) {
             this.x -= 1;
         }
     }
 
 
-    public void moveRight(Map map) {
+    public void moveRight(final Map map) {
         if(movement.canMoveEast(x, y + 1, z, map)) {
             this.y += 1;
         }
     }
 
 
-    public void moveLeft(Map map) {
+    public void moveLeft(final Map map) {
         if(movement.canMoveWest(x + 1, y - 1, z, map)) {
             this.y -= 1;
         }
@@ -99,5 +104,34 @@ public final class Player extends Character implements Fightable {
 
     public void setZ(int z) {
         this.z = z;
+    }
+
+    public boolean isInCombat() {
+        return isInCombat;
+    }
+
+    public void setInCombat(boolean inCombat) {
+        isInCombat = inCombat;
+    }
+
+    public int getLvl() {
+        return lvl;
+    }
+
+    public float getLvlProgress() {
+        return lvlProgress;
+    }
+
+    public void setLvlProgress(float lvlProgress) {
+        this.lvlProgress = lvlProgress;
+        handleLvlUp();
+    }
+
+    private void handleLvlUp() {
+        if (this.lvlProgress >= 1) {
+            this.lvlProgress = 0;
+            this.lvl++;
+            DialogManager.PrintMessage(getName() + " reached lvl " + lvl);
+        }
     }
 }

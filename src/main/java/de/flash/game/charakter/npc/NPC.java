@@ -5,7 +5,7 @@ import de.flash.game.item.weapon.Weapon;
 
 public abstract class NPC extends Character {
 
-    public NPC(String name, float hp, float mp, float mr, float armor, Weapon weapon) {
-        super(name, hp, mp, mr, armor, weapon);
+    public NPC(final String name, final float hp, final float mp, final float mr, final float armor, final Weapon weapon, final int money) {
+        super(name, hp, mp, mr, armor, weapon, money);
     }
 }

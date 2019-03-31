@@ -47,7 +47,7 @@ public class Map {
     public Field getField(final int x, final int y, final int z) {
         if(x < this.field.length && y < this.field[x].length && z < this.field[x][y].length) {
             if(this.field[x][y][z] == null) {
-                this.field[x][y][z] = fieldGenerator.generateRandomField();
+                return null;
             }
             return this.field[x][y][z];
         }
@@ -62,7 +62,7 @@ public class Map {
     public Field getField(final Player player) {
         if(player.getX() < this.field.length && player.getY() < this.field[player.getX()].length && player.getZ() < this.field[player.getX()][player.getY()].length) {
             if(this.field[player.getX()][player.getY()][player.getZ()] == null) {
-                this.field[player.getX()][player.getY()][player.getZ()] = fieldGenerator.generateRandomField();
+                this.field[player.getX()][player.getY()][player.getZ()] = fieldGenerator.generateRandomField(player);
             }
             return this.field[player.getX()][player.getY()][player.getZ()];
         }

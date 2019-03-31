@@ -33,6 +33,7 @@ public class CombatManager {
             final Enemy enemy = currentField.getEnemyByName(splittedCommand[1]);
             if(enemy != null) {
                 final int index = currentField.getIndexOfEnemy(enemy);
+                DialogManager.PrintMessage("You attack " + enemy.getName() + " with your " + player.getWeapon().getName());
                 enemy.fight(player.getWeapon().getDamage(), player.getWeapon().getPenetration() , player.getWeapon().isMagical());
                 currentField.updateEnemies(enemy, index);
             } else {

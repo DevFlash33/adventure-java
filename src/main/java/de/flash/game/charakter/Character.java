@@ -9,14 +9,16 @@ public abstract class Character {
         private float mr;
         private float armor;
         private Weapon weapon;
+    private int money;
 
-        protected Character(String name, float hp, float mp, float mr, float armor, Weapon weapon) {
+    protected Character(final String name, final float hp, final float mp, final float mr, final float armor, final Weapon weapon, final int money) {
             this.name = name;
             this.hp = hp;
             this.mp = mp;
             this.mr = mr;
             this.armor = armor;
             this.weapon = weapon;
+        this.money = money;
         }
 
         public abstract void die();
@@ -67,5 +69,13 @@ public abstract class Character {
 
     public void setWeapon(Weapon weapon) {
         this.weapon = weapon;
+    }
+
+    public int getMoney() {
+        return money;
+    }
+
+    public void setMoney(int money) {
+        this.money = money;
     }
 }

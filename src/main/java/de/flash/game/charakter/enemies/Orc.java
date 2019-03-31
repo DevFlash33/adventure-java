@@ -7,12 +7,12 @@ import de.flash.game.item.weapon.Weapon;
 
 public class Orc extends Enemy {
 
-    public Orc(Status status) {
-        super("Orc", 1, 0, 0.2f, 0.5f, 0.5f , status, generateWeapon(status));
+    public Orc(final Status status, final int money, final float exp) {
+        super("Orc", 100, 0, 0.2f, 0.5f, 0.5f, status, generateWeapon(status), money, exp);
     }
 
     private static Weapon generateWeapon(Status status){
-        return new Axe("Random Axe", 20, 150, 10, 1, status);
+        return new Axe("The total madness Axe", 20, 150, 10, 1, status);
     }
 
     public void die() {
