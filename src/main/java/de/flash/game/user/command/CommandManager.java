@@ -3,25 +3,26 @@ package de.flash.game.user.command;
 import de.flash.game.charakter.player.Player;
 import de.flash.game.dialog.DialogManager;
 import de.flash.game.map.Map;
+import de.flash.game.system.loot.LootHandler;
+import de.flash.game.user.Manager;
 
 import java.util.ArrayList;
 
-public final class CommandManager {
+public final class CommandManager extends Manager {
 
     private final ArrayList<String> commands = new ArrayList<>();
 
     public CommandManager() {
         commands.add("help");
         commands.add("die");
-        commands.add("move");
+        commands.add("move <direction>");
     }
 
-    public void handleCommand(final String command, final Map map, final Player player) {
-        startCommand(command, map, player);
+    public void handleCommand(final String command, final Map map, final Player player, final LootHandler lootHandler) {
+        startCommand(command.toLowerCase(), map, player);
     }
 
-    private void startCommand(String command, final Map map, final Player player) {
-        command = command.toLowerCase();
+    private void startCommand(final String command, final Map map, final Player player) {
         final String splittedCommand = command.split(" ")[0];
         switch (splittedCommand) {
             case "help":
@@ -53,7 +54,7 @@ public final class CommandManager {
                     player.moveBackward(map);
                     break;
                 default:
-                    DialogManager.PrintMessage("You look at the compass and dont found the direction");
+                    DialogManager.printMessage("You look at the compass and dont found the direction");
                     break;
             }
         }
@@ -61,15 +62,14 @@ public final class CommandManager {
 
 
     private void help() {
-        DialogManager.PrintMessage("Possible commands: ");
-        for (String command : commands) {
-            DialogManager.PrintMessage("-> " + command);
+        DialogManager.printMessage("Possible commands: ");
+        for (final String command : commands) {
+            DialogManager.printMessage("-> " + command);
         }
     }
 
-    public boolean isValidCommand(String command) {
-        command = command.toLowerCase();
-        final String splittedCommand = command.split(" ")[0];
-        return commands.stream().anyMatch(res -> res.equals(splittedCommand));
+    public boolean isValidCommand(final String command) {
+        final String splittedCommand = command.toLowerCase().split(" ")[0];
+        return commands.stream().anyMatch(res -> res.split(" ")[0].equals(splittedCommand));
     }
 }

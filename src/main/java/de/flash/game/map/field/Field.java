@@ -43,9 +43,10 @@ public abstract class Field {
     public void updateEnemies(final Enemy enemy, final int index) {
         enemies.remove(index);
         if(enemy.getHp() <= 0) {
-            DialogManager.PrintMessage(enemy.getName() + " was slain!");
+            DialogManager.printMessage(enemy.getName() + " was slain!");
         } else {
-            DialogManager.PrintMessage(enemy.getName() + " has now " + Math.round(enemy.getHp()) + " hp");
+            final int hp = Math.round(enemy.getHp()) == 0 ? 1 : Math.round(enemy.getHp());
+            DialogManager.printMessage(enemy.getName() + " has now " + hp + " hp");
             enemies.add(enemy);
         }
     }

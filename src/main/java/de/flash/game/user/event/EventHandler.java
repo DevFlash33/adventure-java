@@ -6,16 +6,18 @@ import de.flash.game.charakter.player.Player;
 import de.flash.game.dialog.DialogManager;
 import de.flash.game.item.Item;
 import de.flash.game.map.field.Field;
+import de.flash.game.system.loot.LootHandler;
 
 import java.util.ArrayList;
 import java.util.Random;
 
-public final class EventManager {
+public final class EventHandler {
     private boolean isInCombat = false;
     private final ArrayList<Enemy> queuedFightEvent;
     private final Random random = new Random();
+    private final LootHandler lootHandler = new LootHandler();
 
-    public EventManager() {
+    public EventHandler() {
         queuedFightEvent = new ArrayList<>();
     }
 
@@ -27,6 +29,17 @@ public final class EventManager {
         checkForEnemies(field, player);
         checkForFightEvents(player);
         queueFightEvents(field, player);
+        checkForDroppedLoot(field, player);
+    }
+
+    private void checkForDroppedLoot(final Field field, final Player player) {
+        if (lootHandler.getMoney() > 0) {
+            DialogManager.printMessage("You can pickup " + lootHandler.getMoney() + " money");
+        }
+        if (lootHandler.getItems().size() > 0) {
+            DialogManager.printMessage("On the ground laying following Items: ");
+            lootHandler.getItems().forEach(res -> DialogManager.printMessage("-> " + res.getName()));
+        }
     }
 
     private void queueFightEvents(final Field field, final Player player) {
@@ -41,9 +54,10 @@ public final class EventManager {
     private void checkForFightEvents(final Player player) {
         if (player.isInCombat() && queuedFightEvent.size() > 0) {
             for (Enemy e : queuedFightEvent) {
-                DialogManager.PrintMessage(e.getName() + " Attack you with " + e.getWeapon().getName());
+                DialogManager.printMessage(e.getName() + " Attack you with " + e.getWeapon().getName());
                 player.fight(e.getWeapon().getDamage(), e.getWeapon().getPenetration(), e.getWeapon().isMagical());
-                DialogManager.PrintMessage("You have " + player.getHp() + " hp left");
+                final int hp = Math.round(player.getHp()) == 0 ? 1 : Math.round(player.getHp());
+                DialogManager.printMessage("You have " + hp + " hp left");
             }
             queuedFightEvent.clear();
         }
@@ -62,28 +76,32 @@ public final class EventManager {
 
     public void printStatus(final Field field) {
         if (field.getEnemies().size() > 0) {
-            DialogManager.PrintMessage("Enemies are in your range: ");
+            DialogManager.printMessage("Enemies are in your range: ");
             for (Enemy enemy : field.getEnemies()) {
-                DialogManager.PrintMessage(enemy.getName());
+                DialogManager.printMessage(enemy.getName());
             }
         } else if (field.getItems().size() > 0) {
-            DialogManager.PrintMessage("In a chest you see following items: ");
+            DialogManager.printMessage("In a chest you see following items: ");
             for (Item item : field.getItems()) {
-                DialogManager.PrintMessage(item.getName());
+                DialogManager.printMessage(item.getName());
             }
         } else if (field.getNpcs().size() > 0) {
-            DialogManager.PrintMessage("You see following persons: ");
+            DialogManager.printMessage("You see following persons: ");
             for (NPC npc : field.getNpcs()) {
-                DialogManager.PrintMessage(npc.getName());
+                DialogManager.printMessage(npc.getName());
             }
         } else {
-            DialogManager.PrintMessage("You see a" + field.getBiom().getTitle() + " but its nothing here...");
+            DialogManager.printMessage("You see a " + field.getBiom().getTitle() + " but its nothing here...");
         }
-        DialogManager.PrintMessage("What will you do?");
+        DialogManager.printMessage("What will you do?");
 
     }
 
     public boolean isInCombat() {
         return isInCombat;
+    }
+
+    public LootHandler getLootHandler() {
+        return lootHandler;
     }
 }

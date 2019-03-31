@@ -8,6 +8,7 @@ import de.flash.game.dialog.DialogManager;
 import de.flash.game.item.weapon.Fist;
 import de.flash.game.item.weapon.Weapon;
 import de.flash.game.map.Map;
+import de.flash.game.util.fight.FightHelper;
 
 public final class Player extends Character implements Fightable {
 
@@ -31,12 +32,12 @@ public final class Player extends Character implements Fightable {
     }
 
     private static Weapon generateStartWeapon() {
-        return new Fist(10, 0.1f, Status.NORMAL);
+        return new Fist(5, 0.1f, Status.NORMAL);
     }
 
     public void die() {
         setHp(0);
-        DialogManager.PrintMessage("You shall not Pass and die...");
+        DialogManager.printMessage("You shall not Pass and die...");
     }
 
     public void rest() {
@@ -45,39 +46,35 @@ public final class Player extends Character implements Fightable {
 
 
     public void fight(final float damage, final float penetration, final boolean isMagic) {
-        if(isMagic) {
-            setHp(getHp() - (damage * -(getMr() - penetration)));
-        } else {
-            setHp(getHp() - (damage * -(getArmor() - penetration)));
-        }
-        if(getHp() <= 0) {
+        setHp(getHp() - FightHelper.getDamage(damage, penetration, isMagic, getMr(), getArmor()));
+        if (getHp() <= 0) {
             die();
         }
     }
 
     public void moveForward(final Map map) {
-        if(movement.canMoveNorth(x + 1, y, z, map)) {
-          this.x += 1;
+        if (movement.canMoveNorth(x + 1, y, z, map)) {
+            this.x += 1;
         }
     }
 
 
     public void moveBackward(final Map map) {
-        if(movement.canMoveSouth(x - 1, y, z, map)) {
+        if (movement.canMoveSouth(x - 1, y, z, map)) {
             this.x -= 1;
         }
     }
 
 
     public void moveRight(final Map map) {
-        if(movement.canMoveEast(x, y + 1, z, map)) {
+        if (movement.canMoveEast(x, y + 1, z, map)) {
             this.y += 1;
         }
     }
 
 
     public void moveLeft(final Map map) {
-        if(movement.canMoveWest(x + 1, y - 1, z, map)) {
+        if (movement.canMoveWest(x + 1, y - 1, z, map)) {
             this.y -= 1;
         }
     }
@@ -124,14 +121,19 @@ public final class Player extends Character implements Fightable {
 
     public void setLvlProgress(float lvlProgress) {
         this.lvlProgress = lvlProgress;
+
+    }
+
+    public void addLvlProgress(float exp) {
+        this.lvlProgress += exp;
         handleLvlUp();
     }
 
     private void handleLvlUp() {
-        if (this.lvlProgress >= 1) {
-            this.lvlProgress = 0;
+        while (lvlProgress >= 1) {
+            this.lvlProgress -= 1;
             this.lvl++;
-            DialogManager.PrintMessage(getName() + " reached lvl " + lvl);
+            DialogManager.printMessage(getName() + " reached lvl " + lvl);
         }
     }
 }

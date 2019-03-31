@@ -13,7 +13,7 @@ public final class MovementManager {
         if(westMovementValidator.canMove(x, y, z, map)) {
             return true;
         } else {
-            DialogManager.PrintMessage(westMovementValidator.getErrorMsg());
+            DialogManager.printMessage(westMovementValidator.getErrorMsg());
             return false;
         }
     }
@@ -22,7 +22,7 @@ public final class MovementManager {
         if(northMovementValidator.canMove(x, y, z, map)) {
             return true;
         } else {
-            DialogManager.PrintMessage(northMovementValidator.getErrorMsg());
+            DialogManager.printMessage(northMovementValidator.getErrorMsg());
             return false;
         }
     }
@@ -31,7 +31,7 @@ public final class MovementManager {
         if(eastMovmentValidator.canMove(x, y, z, map)) {
             return true;
         } else {
-            DialogManager.PrintMessage(eastMovmentValidator.getErrorMsg());
+            DialogManager.printMessage(eastMovmentValidator.getErrorMsg());
             return false;
         }
     }
@@ -40,7 +40,7 @@ public final class MovementManager {
         if(southMovementValidator.canMove(x, y, z, map)) {
             return true;
         } else {
-            DialogManager.PrintMessage(southMovementValidator.getErrorMsg());
+            DialogManager.printMessage(southMovementValidator.getErrorMsg());
             return false;
         }
     }
