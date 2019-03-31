@@ -1,4 +1,4 @@
-package de.flash.game.user.event;
+package de.flash.game.user.combat;
 
 import de.flash.game.charakter.enemies.Enemy;
 import de.flash.game.charakter.player.Player;
@@ -8,7 +8,7 @@ import de.flash.game.map.field.Field;
 
 import java.util.ArrayList;
 
-public class CombatManager {
+public final class CombatManager {
     private final ArrayList<String> commands = new ArrayList<>();
 
     public CombatManager() {

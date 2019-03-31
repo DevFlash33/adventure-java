@@ -6,7 +6,7 @@ import de.flash.game.map.Map;
 
 import java.util.ArrayList;
 
-public class CommandManager {
+public final class CommandManager {
 
     private final ArrayList<String> commands = new ArrayList<>();
 

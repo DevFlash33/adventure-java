@@ -4,8 +4,8 @@ import de.flash.game.charakter.player.Player;
 import de.flash.game.dialog.DialogManager;
 import de.flash.game.map.Map;
 import de.flash.game.map.field.Field;
+import de.flash.game.user.combat.CombatManager;
 import de.flash.game.user.command.CommandManager;
-import de.flash.game.user.event.CombatManager;
 import de.flash.game.user.event.EventManager;
 import de.flash.game.user.input.InputManager;
 

@@ -4,7 +4,7 @@ import de.flash.game.dialog.DialogManager;
 import de.flash.game.map.Map;
 
 public final class MovementManager {
-    private final NorthMovementValidator northMovementValidator = new NorthMovementValidator("You see a great Hill place, but at the moment you can't climb over that");
+    private final NorthMovementValidator northMovementValidator = new NorthMovementValidator("Great hill landscape look at you, but at the moment you can't climb over that");
     private final SouthMovementValidator southMovementValidator = new SouthMovementValidator("A sea with dangerous legendary monster blocks the way");
     private final EastMovmentValidator eastMovmentValidator = new EastMovmentValidator("You see a lava landscape, you would die if you pass that");
     private final WestMovementValidator westMovementValidator = new WestMovementValidator("Its a dark cave, with dangerous sounds and a magic barrier. You try to pass it, but it throws you back");

@@ -10,7 +10,7 @@ import de.flash.game.map.field.Field;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class EventManager {
+public final class EventManager {
     private boolean isInCombat = false;
     private final ArrayList<Enemy> queuedFightEvent;
     private final Random random = new Random();
