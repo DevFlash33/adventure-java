@@ -45,13 +45,13 @@ public final class FieldGenerator {
         final int randomChoice = random.nextInt(player.getLvl());
         if (randomChoice >= 0 && randomChoice <= 10) {
             return new Goblin(getHpByStatus(100, statusForEnemy), getMrByStatus(0.01f, statusForEnemy), getArmorByStatus(0.01f, statusForEnemy),
-                    getLootChanceByStatus(0.75f, statusForEnemy), statusForEnemy, getSwordByStatus("One-handed Sword", statusForEnemy), getMoneyByStatus(statusForEnemy), getExpByStatus(statusForEnemy));
+                    getLootChanceByStatus(0.75f, statusForEnemy), statusForEnemy, getSwordByStatus("One-handed Sword", statusForEnemy), getMoneyByStatus(statusForEnemy, player), getExpByStatus(statusForEnemy));
         } else if (randomChoice >= 11 && randomChoice <= 25) {
             return new Orc(getHpByStatus(200, statusForEnemy), 0, getArmorByStatus(0.5f, statusForEnemy),
-                    getLootChanceByStatus(1f, statusForEnemy), statusForEnemy, getAxeByStatus("Reaper", statusForEnemy), getMoneyByStatus(statusForEnemy), getExpByStatus(statusForEnemy));
+                    getLootChanceByStatus(1f, statusForEnemy), statusForEnemy, getAxeByStatus("Reaper", statusForEnemy), getMoneyByStatus(statusForEnemy, player), getExpByStatus(statusForEnemy));
         } else {
             return new Goblin(getHpByStatus(1000, statusForEnemy), getMrByStatus(0.1f, statusForEnemy), getArmorByStatus(0.1f, statusForEnemy),
-                    getLootChanceByStatus(1f, statusForEnemy), statusForEnemy, getSwordByStatus("One-handed Sword", statusForEnemy), getMoneyByStatus(statusForEnemy), getExpByStatus(statusForEnemy));
+                    getLootChanceByStatus(1f, statusForEnemy), statusForEnemy, getSwordByStatus("One-handed Sword", statusForEnemy), getMoneyByStatus(statusForEnemy, player), getExpByStatus(statusForEnemy));
         }
 
     }
@@ -118,16 +118,16 @@ public final class FieldGenerator {
         return random.nextFloat() * 0.15f;
     }
 
-    private int getMoneyByStatus(final Status status) {
+    private int getMoneyByStatus(final Status status, final Player player) {
         switch (status) {
             case NORMAL:
-                return random.nextInt(20);
+                return random.nextInt(5 * player.getLvl()) ;
             case RARE:
-                return random.nextInt(50);
+                return random.nextInt(15 * player.getLvl());
             case EPIC:
-                return random.nextInt(100);
+                return random.nextInt(30 * player.getLvl());
             case LEGENDARY:
-                return random.nextInt(200);
+                return random.nextInt(50 * player.getLvl());
         }
         return 0;
     }

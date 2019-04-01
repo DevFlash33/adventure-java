@@ -58,6 +58,34 @@ public final class Player extends Character implements Fightable {
         }
     }
 
+    public void moveForwardRight(final Map map) {
+        if (movement.canMoveNorthEast(x, y, z, map)) {
+            this.x += 1;
+            this.y += 1;
+        }
+    }
+
+    public void moveForwardLeft(final Map map) {
+        if (movement.canMoveNorthWest(x, y, z, map)) {
+            this.x += 1;
+            this.y -= 1;
+        }
+    }
+
+    public void moveBackwardRight(final Map map) {
+        if (movement.canMoveSouthEast(x , y, z, map)) {
+            this.x -= 1;
+            this.y += 1;
+        }
+    }
+
+    public void moveBackwardLeft(final Map map) {
+        if (movement.canMoveSouthWest(x , y, z, map)) {
+            this.x -= 1;
+            this.y -= 1;
+        }
+    }
+
 
     public void moveBackward(final Map map) {
         if (movement.canMoveSouth(x - 1, y, z, map)) {

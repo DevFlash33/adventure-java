@@ -16,6 +16,7 @@ public final class CommandManager extends Manager {
         commands.add("help");
         commands.add("die");
         commands.add("move <direction>");
+        commands.add("rest");
     }
 
     public void handleCommand(final String command, final Map map, final Player player, final LootHandler lootHandler) {
@@ -29,12 +30,23 @@ public final class CommandManager extends Manager {
                 help();
                 break;
             case "die":
-                player.die();
+                commitSuicide(player);
                 break;
             case "move":
                 move(command, map, player);
                 break;
+            case "rest":
+                rest(player);
+                break;
         }
+    }
+
+    private void commitSuicide(final Player player) {
+        player.die();
+    }
+
+    private void rest(final Player player) {
+        player.rest();
     }
 
     private void move(final String command, final Map map, final Player player) {
@@ -47,11 +59,23 @@ public final class CommandManager extends Manager {
                 case "north":
                     player.moveForward(map);
                     break;
+                case "north-west":
+                    player.moveForwardLeft(map);
+                    break;
+                case "north-east":
+                    player.moveForwardRight(map);
+                    break;
                 case "east":
                     player.moveRight(map);
                     break;
                 case "south":
                     player.moveBackward(map);
+                    break;
+                case "south-west":
+                    player.moveBackwardLeft(map);
+                    break;
+                case "south-east":
+                    player.moveBackwardRight(map);
                     break;
                 default:
                     DialogManager.printMessage("You look at the compass and dont found the direction");
