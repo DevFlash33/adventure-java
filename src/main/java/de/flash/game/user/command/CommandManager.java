@@ -2,6 +2,7 @@ package de.flash.game.user.command;
 
 import de.flash.game.charakter.player.Player;
 import de.flash.game.dialog.DialogManager;
+import de.flash.game.item.Item;
 import de.flash.game.map.Map;
 import de.flash.game.system.loot.LootHandler;
 import de.flash.game.user.Manager;
@@ -17,13 +18,17 @@ public final class CommandManager extends Manager {
         commands.add("die");
         commands.add("move <direction>");
         commands.add("rest");
+        commands.add("take <object to take>");
+        commands.add("collect <object to collect>");
+        commands.add("pick-up <object to pick up>");
+
     }
 
     public void handleCommand(final String command, final Map map, final Player player, final LootHandler lootHandler) {
-        startCommand(command.toLowerCase(), map, player);
+        startCommand(command.toLowerCase(), map, player, lootHandler);
     }
 
-    private void startCommand(final String command, final Map map, final Player player) {
+    private void startCommand(final String command, final Map map, final Player player, final LootHandler lootHandler) {
         final String splittedCommand = command.split(" ")[0];
         switch (splittedCommand) {
             case "help":
@@ -38,6 +43,34 @@ public final class CommandManager extends Manager {
             case "rest":
                 rest(player);
                 break;
+            case "take":
+                take(command, map, player, lootHandler);
+                break;
+            case "collect":
+                take(command, map, player, lootHandler);
+                break;
+            case "pick-up":
+                take(command, map, player, lootHandler);
+                break;
+        }
+    }
+
+    private void take(final String command, final Map map, final Player player, final LootHandler lootHandler) {
+        final String[] splittedCommand = command.split(" ");
+        if (splittedCommand.length > 1) {
+            final String objectToGet = splittedCommand[1];
+            if (objectToGet.equalsIgnoreCase("money")) {
+                DialogManager.printMessage("You collect " + lootHandler.getMoney());
+                player.addMoney(lootHandler.getMoney());
+                lootHandler.setMoney(0);
+            } else {
+                final Item item = lootHandler.findItemByName(objectToGet);
+                if (item != null) {
+                    DialogManager.printMessage("You collect " + item.getName());
+                    player.getInventory().addItem(item);
+                    lootHandler.deleteItemByObj(item);
+                }
+            }
         }
     }
 
@@ -78,7 +111,7 @@ public final class CommandManager extends Manager {
                     player.moveBackwardRight(map);
                     break;
                 default:
-                    DialogManager.printMessage("You look at the compass and dont found the direction");
+                    DialogManager.printMessage("You look at the compass and dont found the direction " + splittedCommand[1]);
                     break;
             }
         }

@@ -3,6 +3,7 @@ package de.flash.game.charakter.player;
 import de.flash.game.Status;
 import de.flash.game.charakter.Character;
 import de.flash.game.charakter.Fightable;
+import de.flash.game.charakter.player.inventory.Inventory;
 import de.flash.game.charakter.player.movement.MovementManager;
 import de.flash.game.dialog.DialogManager;
 import de.flash.game.item.weapon.Fist;
@@ -20,6 +21,7 @@ public final class Player extends Character implements Fightable {
     private boolean isInCombat = false;
     private int lvl;
     private float lvlProgress;
+    private final Inventory inventory = new Inventory();
 
     public Player(final String name, final int x, final int y, final int z) {
         super(name, 100, 0, 0, 0, generateStartWeapon(), 100);
@@ -163,5 +165,9 @@ public final class Player extends Character implements Fightable {
             this.lvl++;
             DialogManager.printMessage(getName() + " reached lvl " + lvl);
         }
+    }
+
+    public Inventory getInventory() {
+        return inventory;
     }
 }
