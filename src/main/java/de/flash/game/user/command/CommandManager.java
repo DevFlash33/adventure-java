@@ -17,11 +17,11 @@ public final class CommandManager extends Manager {
         commands.add("help");
         commands.add("die");
         commands.add("move <direction>");
+        commands.add("go <direction>");
         commands.add("rest");
         commands.add("take <object to take>");
         commands.add("collect <object to collect>");
         commands.add("pick-up <object to pick up>");
-
     }
 
     public void handleCommand(final String command, final Map map, final Player player, final LootHandler lootHandler) {
@@ -38,29 +38,32 @@ public final class CommandManager extends Manager {
                 commitSuicide(player);
                 break;
             case "move":
-                move(command, map, player);
+                move(command, map, player, lootHandler);
+                break;
+            case "go":
+                move(command, map, player, lootHandler);
                 break;
             case "rest":
                 rest(player);
                 break;
             case "take":
-                take(command, map, player, lootHandler);
+                take(command, player, lootHandler);
                 break;
             case "collect":
-                take(command, map, player, lootHandler);
+                take(command, player, lootHandler);
                 break;
             case "pick-up":
-                take(command, map, player, lootHandler);
+                take(command, player, lootHandler);
                 break;
         }
     }
 
-    private void take(final String command, final Map map, final Player player, final LootHandler lootHandler) {
+    private void take(final String command, final Player player, final LootHandler lootHandler) {
         final String[] splittedCommand = command.split(" ");
         if (splittedCommand.length > 1) {
             final String objectToGet = splittedCommand[1];
             if (objectToGet.equalsIgnoreCase("money")) {
-                DialogManager.printMessage("You collect " + lootHandler.getMoney());
+                DialogManager.printMessage("You collect " + lootHandler.getMoney() + " money");
                 player.addMoney(lootHandler.getMoney());
                 lootHandler.setMoney(0);
             } else {
@@ -82,9 +85,10 @@ public final class CommandManager extends Manager {
         player.rest();
     }
 
-    private void move(final String command, final Map map, final Player player) {
+    private void move(final String command, final Map map, final Player player, final LootHandler lootHandler) {
         final String[] splittedCommand = command.split(" ");
         if (splittedCommand.length > 1) {
+            boolean canClear = true;
             switch (splittedCommand[1]) {
                 case "west":
                     player.moveLeft(map);
@@ -111,8 +115,12 @@ public final class CommandManager extends Manager {
                     player.moveBackwardRight(map);
                     break;
                 default:
+                    canClear = false;
                     DialogManager.printMessage("You look at the compass and dont found the direction " + splittedCommand[1]);
                     break;
+            }
+            if(canClear) {
+                lootHandler.clear();
             }
         }
     }

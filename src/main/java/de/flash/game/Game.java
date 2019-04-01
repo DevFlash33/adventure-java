@@ -35,13 +35,25 @@ public class Game {
             eventHandler.checkForEvents(currentField, player);
         }
         if (!(player.getHp() <= 0)) {
-            eventHandler.printStatus(currentField);
-            final String input = inputHandler.getInput();
-            if (player.isInCombat()) {
-                handleInteraction(input, combatManager, eventHandler.getLootHandler());
+            if(combatManager.isAutoFight()) {
+                handleAutofight();
             } else {
-                handleInteraction(input, commandManager, eventHandler.getLootHandler());
+                eventHandler.printStatus(currentField);
+                final String input = inputHandler.getInput();
+                if (player.isInCombat()) {
+                    handleInteraction(input, combatManager, eventHandler.getLootHandler());
+                } else {
+                    handleInteraction(input, commandManager, eventHandler.getLootHandler());
+                }
             }
+        }
+    }
+
+    private void handleAutofight() {
+        if(player.isInCombat()) {
+            handleInteraction("fight " + combatManager.getRandomEnemyName(map, player), combatManager, eventHandler.getLootHandler());
+        } else {
+            combatManager.setAutoFight(false);
         }
     }
 
@@ -52,7 +64,7 @@ public class Game {
                 isDoingSomething = true;
             }
         } else {
-            DialogManager.printMessage("You think you do " + input + " but nothing happen");
+            DialogManager.printMessage("You think you " + input + " but nothing happen");
             isDoingSomething = false;
         }
     }

@@ -20,11 +20,11 @@ public final class FieldGenerator {
         final ArrayList<Enemy> enemies = new ArrayList<>();
         final ArrayList<Item> items = new ArrayList<>();
         final ArrayList<NPC> npcs = new ArrayList<>();
+        final Status status = getStatusByPlayerLevel(player);
+        for (int i = 0; i < getEnemyAmountByPlayerLevelAndStatus(player, status); i++) {
+            enemies.add(getRandomEnemyBasedOnPlayerLevel(player, status));
+        }
         if (random.nextInt(5) >= 3) {
-            final Status status = getStatusByPlayerLevel(player);
-            for (int i = 0; i < getEnemyAmountByPlayerLevelAndStatus(player, status); i++) {
-                enemies.add(getRandomEnemyBasedOnPlayerLevel(player, status));
-            }
             return new ForestField(enemies, items, npcs, "Dark Forest in the night");
         } else {
             return new ForestField(enemies, items, npcs, "Redwood Forest with a great sea");
@@ -80,11 +80,11 @@ public final class FieldGenerator {
 
     private Sword getSwordByStatus(final String name, final Status status) {
         final boolean isMagical = getAttributeByStatus(1, status) >= 1;
-        return new Sword(name, getAttributeByStatus(5, status), getAttributeByStatus(20, status), getAttributeByStatus(50, status), getAttributeByStatus(1, status), isMagical, status);
+        return new Sword(name, getAttributeByStatus(5, status), getAttributeByStatus(20, status), getAttributeByStatus(550, status), getAttributeByStatus(1, status), isMagical, status);
     }
 
     private Axe getAxeByStatus(final String name, final Status status) {
-        return new Axe(name, getAttributeByStatus(16, status), getAttributeByStatus(200, status), getAttributeByStatus(150, status), getAttributeByStatus(2, status), status);
+        return new Axe(name, getAttributeByStatus(16, status), getAttributeByStatus(200, status), getAttributeByStatus(1000, status), getAttributeByStatus(2, status), status);
     }
 
 

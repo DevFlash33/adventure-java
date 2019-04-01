@@ -7,6 +7,7 @@ import de.flash.game.item.Item;
 import de.flash.game.map.biom.Biom;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public abstract class Field {
     private final ArrayList<Enemy> enemies;
@@ -36,6 +37,12 @@ public abstract class Field {
         return targetEnemy;
     }
 
+    public String getRandomEnemyName() {
+        final Random random = new Random();
+        final int index = random.nextInt(enemies.size());
+        return enemies.get(index > 0 ? index - 1 : index).getName();
+    }
+
     public int getIndexOfEnemy(final Enemy searchEnemy) {
         return enemies.indexOf(searchEnemy);
     }
@@ -43,10 +50,10 @@ public abstract class Field {
     public void updateEnemies(final Enemy enemy, final int index) {
         enemies.remove(index);
         if(enemy.getHp() <= 0) {
-            DialogManager.printMessage(enemy.getName() + " was slain!");
+            DialogManager.printFightMessage(enemy.getName() + " was slain!");
         } else {
             final int hp = Math.round(enemy.getHp()) == 0 ? 1 : Math.round(enemy.getHp());
-            DialogManager.printMessage(enemy.getName() + " has now " + hp + " hp");
+            DialogManager.printFightMessage(enemy.getName() + " has now " + hp + " hp");
             enemies.add(enemy);
         }
     }

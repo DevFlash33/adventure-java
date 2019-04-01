@@ -70,6 +70,11 @@ public class LootHandler {
         this.items.clear();
     }
 
+    public void clear() {
+        clearItems();
+        money = 0;
+    }
+
     public float getMoney() {
         return money;
     }

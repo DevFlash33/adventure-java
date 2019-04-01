@@ -34,12 +34,12 @@ public final class Player extends Character implements Fightable {
     }
 
     private static Weapon generateStartWeapon() {
-        return new Fist(5, 0.1f, Status.NORMAL);
+        return new Fist(10, 0.1f, Status.NORMAL);
     }
 
     public void die() {
         setHp(0);
-        DialogManager.printMessage("You shall not Pass and die...");
+        DialogManager.printMessage("You shall not pass and die...");
     }
 
     public void rest() {
@@ -75,14 +75,14 @@ public final class Player extends Character implements Fightable {
     }
 
     public void moveBackwardRight(final Map map) {
-        if (movement.canMoveSouthEast(x , y, z, map)) {
+        if (movement.canMoveSouthEast(x, y, z, map)) {
             this.x -= 1;
             this.y += 1;
         }
     }
 
     public void moveBackwardLeft(final Map map) {
-        if (movement.canMoveSouthWest(x , y, z, map)) {
+        if (movement.canMoveSouthWest(x, y, z, map)) {
             this.x -= 1;
             this.y -= 1;
         }

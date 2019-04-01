@@ -15,6 +15,8 @@ public final class EventHandler {
     private final ArrayList<Enemy> queuedFightEvent;
     private final Random random = new Random();
     private final LootHandler lootHandler = new LootHandler();
+    private boolean alreadyPrinted = false;
+    private Field lastField;
 
     public EventHandler() {
         queuedFightEvent = new ArrayList<>();
@@ -25,15 +27,20 @@ public final class EventHandler {
     }
 
     public void checkForEvents(final Field field, final Player player) {
+        if(lastField == null || lastField != field) {
+            lastField = field;
+            alreadyPrinted = false;
+        }
         checkForEnemies(field, player);
         checkForFightEvents(player);
         queueFightEvents(field, player);
-        checkForDroppedLoot(field, player);
+        checkForDroppedLoot();
     }
 
-    private void checkForDroppedLoot(final Field field, final Player player) {
-        if (lootHandler.getMoney() > 0) {
-            DialogManager.printMessage("You can pickup " + lootHandler.getMoney() + " money");
+    private void checkForDroppedLoot() {
+        if (lootHandler.getMoney() > 0 && !alreadyPrinted) {
+            DialogManager.printMessage("You can pick up " + lootHandler.getMoney() + " money");
+            alreadyPrinted = true;
         }
         if (lootHandler.getItems().size() > 0) {
             DialogManager.printMessage("On the ground laying following Items: ");
@@ -53,7 +60,7 @@ public final class EventHandler {
     private void checkForFightEvents(final Player player) {
         if (player.isInCombat() && queuedFightEvent.size() > 0) {
             for (Enemy e : queuedFightEvent) {
-                DialogManager.printMessage(e.getName() + " Attack you with " + e.getWeapon().getName());
+                DialogManager.printFightMessage(e.getName() + " Attack you with " + e.getWeapon().getName());
                 player.fight(e.getWeapon().getDamage(), e.getWeapon().getPenetration(), e.getWeapon().isMagical());
                 final int hp = Math.round(player.getHp()) == 0 ? 1 : Math.round(player.getHp());
                 DialogManager.printMessage("You have " + hp + " hp left");
