@@ -22,6 +22,7 @@ public final class CommandManager extends Manager {
         commands.add("take <object to take>");
         commands.add("collect <object to collect>");
         commands.add("pick-up <object to pick up>");
+        commands.add("info");
     }
 
     public void handleCommand(final String command, final Map map, final Player player, final LootHandler lootHandler) {
@@ -55,7 +56,13 @@ public final class CommandManager extends Manager {
             case "pick-up":
                 take(command, player, lootHandler);
                 break;
+            case "info":
+                printPlayerInfo(player);
         }
+    }
+
+    private void printPlayerInfo(Player player) {
+        player.printInfo();
     }
 
     private void take(final String command, final Player player, final LootHandler lootHandler) {

@@ -8,6 +8,6 @@ public class EastMovmentValidator extends MovementValidator {
     }
 
     public boolean canMove(int xcord, int ycord, int zcord, Map map) {
-        return ycord <= map.getMaxY();
+        return ycord < map.getMaxY();
     }
 }

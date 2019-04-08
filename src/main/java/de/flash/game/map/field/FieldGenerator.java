@@ -135,15 +135,15 @@ public final class FieldGenerator {
     private float getExpByStatus(final Status status) {
         switch (status) {
             case NORMAL:
-                return random.nextFloat() * 0.015f;
+                return random.nextFloat() * 0.10f;
             case RARE:
-                return random.nextFloat() * 0.028f;
+                return random.nextFloat() * 0.18f;
             case EPIC:
-                return random.nextFloat() * 0.059f;
-            case LEGENDARY:
                 return random.nextFloat() * 0.25f;
+            case LEGENDARY:
+                return random.nextFloat() * 0.34f;
             default:
-                return random.nextFloat() * 0.01f;
+                return random.nextFloat() * 0.55f;
         }
     }
 }

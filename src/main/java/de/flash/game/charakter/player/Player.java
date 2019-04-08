@@ -54,6 +54,19 @@ public final class Player extends Character implements Fightable {
         }
     }
 
+    public void printInfo() {
+        DialogManager.printMessage("----Player Info----");
+        DialogManager.printMessage("Name: " + getName());
+        DialogManager.printMessage("Level: " + getLvl());
+        DialogManager.printMessage("HP: " + getHp());
+        DialogManager.printMessage("MP: " + getMp());
+        DialogManager.printMessage("EXP: " + getLvlProgress() * 100 + "%");
+        DialogManager.printMessage("Money: " + getMoney());
+        DialogManager.printMessage("Current weapon: " + getWeapon().getName());
+        DialogManager.printMessage("Current weapon damage: " + getWeapon().getDamage());
+        getInventory().printInfo();
+    }
+
     public void moveForward(final Map map) {
         if (movement.canMoveNorth(x + 1, y, z, map)) {
             this.x += 1;
